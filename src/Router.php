@@ -5,12 +5,6 @@ namespace src;
 class Router {
 
     protected array $routes = [];
-    protected Request $request;
-
-    public function __construct()
-    {
-        $this->request = new Request;
-    }
 
     public function get($path , $callBack){
         $this->routes["get"][$path] =  $callBack;
@@ -22,8 +16,8 @@ class Router {
 
     public function resolve(){
 
-        $method = $this->request->getMethod();
-        $path = $this->request->getPath() ;
+        $method = Request::getMethod() ;
+        $path = Request::getPath() ;
 
         $callBack =  $this->routes[$method][$path] ?? false;
         
