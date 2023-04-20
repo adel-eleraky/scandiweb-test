@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Database\Models\Model;
 use App\Http\Request\Validation;
+use src\Request;
 use src\Router;
 
 
@@ -33,21 +34,37 @@ class ProductController {
         $validation->setInputName("price")->setInput($_POST['price'] ?? "")->required()->numeric();
         $validation->setInputName("type")->setInput($_POST['type'] ?? "")->required();
 
+        $validationErrors = [ "sku" =>  $validation->getErrorMessage("sku") , 
+                            "name" => $validation->getErrorMessage("name") ,
+                            "price" =>  $validation->getErrorMessage("price") , 
+                            "type" => $validation->getErrorMessage("type")  ];
+
         if(isset($_POST['type'])){
             $type = "\\App\\Database\\Models\\".$_POST['type'];
             $productType = new $type;
-            $validationResult = $productType->validateDetails([ "weight" => $_POST['weight'] ?? "" , "size" => $_POST['size'] ?? "" , "height" => $_POST['height'] ?? "" , "width" => $_POST['width'] ?? "" , "length" => $_POST['length'] ?? "" ]);
+            $validationDetails = $productType->validateDetails([ "weight" => $_POST['weight'] ?? "" , "size" => $_POST['size'] ?? "" , "height" => $_POST['height'] ?? "" , "width" => $_POST['width'] ?? "" , "length" => $_POST['length'] ?? "" ]);
+            $validationErrors["details"] = ["weight" => $validationDetails->getErrorMessage("weight") ,
+                                "size" => $validationDetails->getErrorMessage("size") ,
+                                "width" => $validationDetails->getErrorMessage("width")  ,
+                                "height" => $validationDetails->getErrorMessage("height")  , 
+                                "length" => $validationDetails->getErrorMessage("length") ];
+        }
 
-            if(empty($validationResult) or empty($validation->getErrors())){
-                $productType->setSku($_POST['sku'] ?? "")
-                            ->setName($_POST['name'] ?? "")
-                            ->setPrice($_POST['price'] ?? "")
-                            ->setType($_POST['type'] ?? "")
-                            ->setDetails([ "weight" => $_POST['weight'] ?? "" , "size" => $_POST['size'] ?? "" , "height" => $_POST['height'] ?? "" , "width" => $_POST['width'] ?? "" , "length" => $_POST['length'] ?? "" ]);
-                if($productType->create()){
-                    header("location:/");
-                }
+        if(empty($validationDetails->getErrors()) and empty($validation->getErrors())){
+
+            $productType->setSku($_POST['sku'] ?? "")
+                        ->setName($_POST['name'] ?? "")
+                        ->setPrice($_POST['price'] ?? "")
+                        ->setType($_POST['type'] ?? "")
+                        ->setDetails([ "weight" => $_POST['weight'] ?? "" , "size" => $_POST['size'] ?? "" , "height" => $_POST['height'] ?? "" , "width" => $_POST['width'] ?? "" , "length" => $_POST['length'] ?? "" ]);
+            
+            if($productType->create()){
+                header("location:/");
+            }else{
+                echo "Something Went Wrong";die;
             }
+        }else{
+            return Router::renderView("add-product" , compact('validationErrors'));
         }
     }
 

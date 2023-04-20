@@ -22,7 +22,7 @@ class Book extends Product{
     {
         $validation = new Validation;
         $validation->setInputName("weight")->setInput($details['weight'])->required()->numeric();
-        return $validation->getErrors();
+        return $validation;
     }
 }
 ?>

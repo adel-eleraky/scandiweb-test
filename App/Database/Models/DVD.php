@@ -23,7 +23,7 @@ class DVD extends Product{
     {
         $validation = new Validation;
         $validation->setInputName("size")->setInput($details['size'])->required()->numeric();
-        return $validation->getErrors();
+        return $validation;
     }
 }
 ?>
