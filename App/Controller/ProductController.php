@@ -72,8 +72,8 @@ class ProductController {
     public function delete(){
 
         $product = new Model;
-        foreach($_POST['ids'] as $id){
-            $product->delete($id);
+        if(isset($_POST['ids'])){
+            $product->delete($_POST['ids']);
         }
         header("location:/");
     }

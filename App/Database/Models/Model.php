@@ -12,10 +12,10 @@ class Model extends Connection{
         return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function delete($id){
-        $query = "DELETE FROM products WHERE id = ?";
+    public function delete($ids = []){
+        $ids = implode(",", array_values($ids));
+        $query = "DELETE FROM products WHERE id IN ($ids)";
         $statement = $this->conn->prepare($query);
-        $statement->bind_param("i" , $id);
         return $statement->execute();
     }
 
