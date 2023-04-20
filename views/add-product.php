@@ -23,14 +23,17 @@
                 <div class="sku">
                     <label for="sku">Sku</label>
                     <input type="text" name="sku" id="sku" onblur="validateSku()">
+                    <?= $validationErrors['sku'] ?? "" ?>
                 </div>
                 <div class="name">
                     <label for="name">name</label>
                     <input type="text" name="name" id="name" onblur="validateName()">
+                    <?= $validationErrors['name'] ?? "" ?>
                 </div>
                 <div class="price">
                     <label for="price">price</label>
                     <input type="number" name="price" id="price" onblur="validatePrice()">
+                    <?= $validationErrors['price'] ?? "" ?>
                 </div>
                 <div class="type">
                     <label for="productType">Type Switcher</label>
@@ -39,8 +42,14 @@
                         <option value="Furniture">Furniture</option>
                         <option value="DVD">DVD</option>
                     </select>
+                    <?= $validationErrors['type'] ?? "" ?>
                 </div>
             </form>
+            <?= $validationErrors['details']['weight'] ?? "" ?><br>
+            <?= $validationErrors['details']['size'] ?? "" ?><br>
+            <?= $validationErrors['details']['width'] ?? "" ?><br>
+            <?= $validationErrors['details']['length'] ?? "" ?><br>
+            <?= $validationErrors['details']['height'] ?? "" ?><br>
         </div>
     </div>
     <!-- end form  -->
