@@ -42,7 +42,7 @@ class ProductController {
         if(isset($_POST['type'])){
             $type = "\\App\\Database\\Models\\".$_POST['type'];
             $productType = new $type;
-            $validationDetails = $productType->validateDetails([ "weight" => $_POST['weight'] ?? "" , "size" => $_POST['size'] ?? "" , "height" => $_POST['height'] ?? "" , "width" => $_POST['width'] ?? "" , "length" => $_POST['length'] ?? "" ]);
+            $validationDetails = $productType->validateDetails([  "weight" => $_POST['weight'] , "size" => $_POST['size'] , "height" => $_POST['height'] , "width" => $_POST['width'] , "length" => $_POST['length']  ]);
             $validationErrors["details"] = ["weight" => $validationDetails->getErrorMessage("weight") ,
                                 "size" => $validationDetails->getErrorMessage("size") ,
                                 "width" => $validationDetails->getErrorMessage("width")  ,
@@ -56,7 +56,7 @@ class ProductController {
                         ->setName($_POST['name'] ?? "")
                         ->setPrice($_POST['price'] ?? "")
                         ->setType($_POST['type'] ?? "")
-                        ->setDetails([ "weight" => $_POST['weight'] ?? "" , "size" => $_POST['size'] ?? "" , "height" => $_POST['height'] ?? "" , "width" => $_POST['width'] ?? "" , "length" => $_POST['length'] ?? "" ]);
+                        ->setDetails([ "weight" => $_POST['weight'] , "size" => $_POST['size'] , "height" => $_POST['height'] , "width" => $_POST['width'] , "length" => $_POST['length'] ]);
             
             if($productType->create()){
                 header("location:/");
