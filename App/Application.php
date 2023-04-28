@@ -1,23 +1,20 @@
-<?php 
+<?php
 
 namespace App;
 
 use src\Router;
 
-class Application {
-
+class Application
+{
     public Router $router ;
 
     public function __construct()
     {
-        $this->router = new Router;
+        $this->router = new Router();
     }
-    
-    public function run(){
+
+    public function run()
+    {
         return $this->router->resolve();
     }
 }
-
-
-
-?>

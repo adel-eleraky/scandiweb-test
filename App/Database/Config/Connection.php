@@ -1,9 +1,9 @@
-<?php 
+<?php
+
 namespace App\Database\Config;
 
-
-
-class Connection {
+class Connection
+{
     private $hostName = "localhost";
     private $databaseUserName = "root";
     private $databasePassword = "";
@@ -14,7 +14,7 @@ class Connection {
 
     public function __construct()
     {
-        $this->conn = new \mysqli($this->hostName , $this->databaseUserName , $this->databasePassword , $this->databaseName , $this->port);
+        $this->conn = new \mysqli($this->hostName, $this->databaseUserName, $this->databasePassword, $this->databaseName, $this->port);
 
         // if($this->conn->connect_error){
         //     die("connection failed" . $this->conn->connect_error);
@@ -28,5 +28,3 @@ class Connection {
     }
 
 }
-
-?>
