@@ -8,7 +8,12 @@ abstract class Product extends Model{
     protected $id , $sku , $name , $price , $type , $details; 
 
 
-    public abstract function create();
+    public function create(){
+        $query = "INSERT INTO products ( sku , name , price , category , details ) VALUES ( ? , ? , ? , ? , ?)";
+        $statement = $this->conn->prepare($query);
+        $statement->bind_param("ssiss" , $this->sku , $this->name , $this->price , $this->type , $this->details);
+        return $statement->execute();
+    }
 
     public abstract function setDetails($details = []);
 
